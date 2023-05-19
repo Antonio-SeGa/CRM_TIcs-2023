@@ -1,0 +1,847 @@
+[
+    {
+        "id": "5a35277603f7017d",
+        "type": "tab",
+        "label": "CRM TIcs v1.0",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5c7692d50e864c2a",
+        "type": "inject",
+        "z": "5a35277603f7017d",
+        "name": "Carga datos",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "25",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "2dc5e5f710d6af1b"
+            ]
+        ]
+    },
+    {
+        "id": "2dc5e5f710d6af1b",
+        "type": "function",
+        "z": "5a35277603f7017d",
+        "name": "function 2",
+        "func": "msg.topic ='SELECT * FROM aspirantes'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 80,
+        "wires": [
+            [
+                "e6dd2d3c403946e3"
+            ]
+        ]
+    },
+    {
+        "id": "5d5c84a349ccf254",
+        "type": "ui_table",
+        "z": "5a35277603f7017d",
+        "group": "c345a7f4ca49c4c1",
+        "name": "",
+        "order": 1,
+        "width": "15",
+        "height": "10",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 970,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5379f86e049195ab",
+        "type": "mysql",
+        "z": "5a35277603f7017d",
+        "mydb": "1899bc6a4ef86be0",
+        "name": "",
+        "x": 800,
+        "y": 140,
+        "wires": [
+            [
+                "992fb581f17dc162",
+                "5d5c84a349ccf254"
+            ]
+        ]
+    },
+    {
+        "id": "5ec9a9af466f0b4a",
+        "type": "function",
+        "z": "5a35277603f7017d",
+        "name": "function 3",
+        "func": "msg.topic = 'SELECT Correo FROM aspirantes'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "cd7769f6e23873fb"
+            ]
+        ]
+    },
+    {
+        "id": "918929144fa9a4e4",
+        "type": "ui_form",
+        "z": "5a35277603f7017d",
+        "name": "",
+        "label": "Ingreso de usuarios",
+        "group": "d1b3ee5915f0f6fc",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "Nombre",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Apellido Paterno",
+                "value": "ApellidoP",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Apellido Materno",
+                "value": "ApellidoM",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Correo",
+                "value": "Correo",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Telefono",
+                "value": "Telefono",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Facebook",
+                "value": "Facebook",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Institución",
+                "value": "Institucion",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Semestre",
+                "value": "Semestre",
+                "type": "number",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Nombre": "",
+            "ApellidoP": "",
+            "ApellidoM": "",
+            "Correo": "",
+            "Telefono": "",
+            "Facebook": "",
+            "Institucion": "",
+            "Semestre": ""
+        },
+        "payload": "",
+        "submit": "Submit",
+        "cancel": "cancel",
+        "topic": "Form",
+        "topicType": "str",
+        "splitLayout": false,
+        "className": "",
+        "x": 210,
+        "y": 140,
+        "wires": [
+            [
+                "c8b6b3622c30a0bc"
+            ]
+        ]
+    },
+    {
+        "id": "c8b6b3622c30a0bc",
+        "type": "sqlstring-format",
+        "z": "5a35277603f7017d",
+        "name": "",
+        "query": " INSERT INTO aspirantes \n (Nombre, ApellidoP, ApellidoM, Correo, Telefono, Facebook, Institucion, Semestre) \n VALUES ( ?,?,?,?,?,?,?,?);\n",
+        "vars": "payload.Nombre,payload.ApellidoP,payload.ApellidoM,payload.Correo,payload.Telefono,payload.Facebook,payload.Institucion,payload.Semestre",
+        "outField": "topic",
+        "x": 410,
+        "y": 140,
+        "wires": [
+            [
+                "e6dd2d3c403946e3"
+            ]
+        ]
+    },
+    {
+        "id": "9266ba1f397b3d62",
+        "type": "function",
+        "z": "5a35277603f7017d",
+        "name": "function 4",
+        "func": "let data = msg.payload;\n//msg.payload = data.length;\n//msg.payload = data[0].Telefono;\nfor (let index = 0; index < data.length; index++) {\n    msg.payload = data[index].Telefono;\n    return msg;\n    \n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "998f07d709a8f298",
+        "type": "debug",
+        "z": "5a35277603f7017d",
+        "name": "Dashboard Log",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1840,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "beaae951df611a50",
+        "type": "split",
+        "z": "5a35277603f7017d",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 820,
+        "y": 320,
+        "wires": [
+            [
+                "27771d95965a1fbd"
+            ]
+        ]
+    },
+    {
+        "id": "ac46bd4f44b8eb65",
+        "type": "ui_form",
+        "z": "5a35277603f7017d",
+        "name": "Consulta de usuarios",
+        "label": "",
+        "group": "08e714efc0a7691b",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "Nombre",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Nombre": ""
+        },
+        "payload": "",
+        "submit": "Submit",
+        "cancel": "cancel",
+        "topic": "Form",
+        "topicType": "str",
+        "splitLayout": false,
+        "className": "",
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "1e97663332831414"
+            ]
+        ]
+    },
+    {
+        "id": "1e97663332831414",
+        "type": "sqlstring-format",
+        "z": "5a35277603f7017d",
+        "name": "",
+        "query": "Select * from aspirantes where Nombre = ?\n\n",
+        "vars": "payload.Nombre",
+        "outField": "topic",
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "e6dd2d3c403946e3"
+            ]
+        ]
+    },
+    {
+        "id": "7f6eb0acec2296ae",
+        "type": "e-mail",
+        "z": "5a35277603f7017d",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "",
+        "x": 1270,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ad8bf9f6b45ad168",
+        "type": "ui_form",
+        "z": "5a35277603f7017d",
+        "name": "Correo",
+        "label": "",
+        "group": "6517f3016d5c477a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Asunto",
+                "value": "To",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Cuepo",
+                "value": "Message",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "To": "",
+            "Message": ""
+        },
+        "payload": "",
+        "submit": "Enviar",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "5ec9a9af466f0b4a",
+                "e88374491638e7da"
+            ]
+        ]
+    },
+    {
+        "id": "1b3ad58a7898f25f",
+        "type": "function",
+        "z": "5a35277603f7017d",
+        "name": "function 6",
+        "func": "let correo = msg.payload.Correo\n\nmsg.to = correo\nmsg.topic = msg.payload.To\nmsg.payload = msg.payload.Message\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 340,
+        "wires": [
+            [
+                "ae68d1541622b2b4",
+                "7f6eb0acec2296ae"
+            ]
+        ]
+    },
+    {
+        "id": "27771d95965a1fbd",
+        "type": "join",
+        "z": "5a35277603f7017d",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 960,
+        "y": 340,
+        "wires": [
+            [
+                "1b3ad58a7898f25f"
+            ]
+        ]
+    },
+    {
+        "id": "766ff677149ec0f5",
+        "type": "link in",
+        "z": "5a35277603f7017d",
+        "name": "link in 1",
+        "links": [
+            "e6dd2d3c403946e3",
+            "0c922272d203f07a"
+        ],
+        "x": 655,
+        "y": 140,
+        "wires": [
+            [
+                "5379f86e049195ab"
+            ]
+        ]
+    },
+    {
+        "id": "e6dd2d3c403946e3",
+        "type": "link out",
+        "z": "5a35277603f7017d",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [],
+        "x": 575,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e88374491638e7da",
+        "type": "link out",
+        "z": "5a35277603f7017d",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "e1b1a08402afa4c0"
+        ],
+        "x": 355,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e1b1a08402afa4c0",
+        "type": "link in",
+        "z": "5a35277603f7017d",
+        "name": "link in 2",
+        "links": [
+            "e88374491638e7da"
+        ],
+        "x": 855,
+        "y": 360,
+        "wires": [
+            [
+                "27771d95965a1fbd"
+            ]
+        ]
+    },
+    {
+        "id": "992fb581f17dc162",
+        "type": "ui_table",
+        "z": "5a35277603f7017d",
+        "group": "715dc720058e50a5",
+        "name": "",
+        "order": 1,
+        "width": "10",
+        "height": "7",
+        "columns": [],
+        "outputs": 1,
+        "cts": true,
+        "x": 970,
+        "y": 180,
+        "wires": [
+            [
+                "642dbf87b9e6119f",
+                "878ffdcbd0cfd9d8"
+            ]
+        ]
+    },
+    {
+        "id": "cd7769f6e23873fb",
+        "type": "mysql",
+        "z": "5a35277603f7017d",
+        "mydb": "1899bc6a4ef86be0",
+        "name": "",
+        "x": 600,
+        "y": 320,
+        "wires": [
+            [
+                "beaae951df611a50"
+            ]
+        ]
+    },
+    {
+        "id": "744aa9b1de0aa319",
+        "type": "function",
+        "z": "5a35277603f7017d",
+        "name": "function 7",
+        "func": "let id = msg.payload.id\nlet name = msg.payload.Nombre\nlet aP = msg.payload.ApellidoP\nlet aM = msg.payload.ApellidoM\nlet email = msg.payload.Correo\nlet cel = msg.payload.Telefono\nlet face = msg.payload.Facebook\nlet cole = msg.payload.Institucion\nlet sem = msg.payload.Semestre\n\nmsg.topic = \"UPDATE aspirantes SET Nombre='\" + name + \"', ApellidoP='\" + aP + \"', ApellidoM='\" + aM + \"', Correo='\" + email + \"', Telefono=\" + cel + \", Facebook='\" + face +\"', Institucion='\"+cole+\"', Semestre=\"+sem+\" WHERE id=\" + id\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 180,
+        "wires": [
+            [
+                "0c922272d203f07a",
+                "998f07d709a8f298"
+            ]
+        ]
+    },
+    {
+        "id": "642dbf87b9e6119f",
+        "type": "function",
+        "z": "5a35277603f7017d",
+        "name": "function 8",
+        "func": "let id = msg.payload.id\nmsg.payload = {\n    id: id\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 160,
+        "wires": [
+            [
+                "851dd877c36b8db9"
+            ]
+        ]
+    },
+    {
+        "id": "851dd877c36b8db9",
+        "type": "join",
+        "z": "5a35277603f7017d",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "9",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1330,
+        "y": 180,
+        "wires": [
+            [
+                "744aa9b1de0aa319"
+            ]
+        ]
+    },
+    {
+        "id": "ae68d1541622b2b4",
+        "type": "debug",
+        "z": "5a35277603f7017d",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0c922272d203f07a",
+        "type": "link out",
+        "z": "5a35277603f7017d",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "766ff677149ec0f5"
+        ],
+        "x": 1645,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8f4855fa650070ce",
+        "type": "debug",
+        "z": "5a35277603f7017d",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "d996472d2ca971cc",
+        "type": "debug",
+        "z": "5a35277603f7017d",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "878ffdcbd0cfd9d8",
+        "type": "ui_form",
+        "z": "5a35277603f7017d",
+        "name": "",
+        "label": "Actualizar usuarios",
+        "group": "3939e1a8bb4490e0",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "Nombre",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Apellido Paterno",
+                "value": "ApellidoP",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Apellido Materno",
+                "value": "ApellidoM",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Correo",
+                "value": "Correo",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Telefono",
+                "value": "Telefono",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Facebook",
+                "value": "Facebook",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Institución",
+                "value": "Institucion",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Semestre",
+                "value": "Semestre",
+                "type": "number",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Nombre": "",
+            "ApellidoP": "",
+            "ApellidoM": "",
+            "Correo": "",
+            "Telefono": "",
+            "Facebook": "",
+            "Institucion": "",
+            "Semestre": ""
+        },
+        "payload": "",
+        "submit": "Submit",
+        "cancel": "cancel",
+        "topic": "Form",
+        "topicType": "str",
+        "splitLayout": false,
+        "className": "",
+        "x": 1170,
+        "y": 240,
+        "wires": [
+            [
+                "851dd877c36b8db9"
+            ]
+        ]
+    },
+    {
+        "id": "c345a7f4ca49c4c1",
+        "type": "ui_group",
+        "name": "Consulta",
+        "tab": "219bf782a7bcea97",
+        "order": 2,
+        "disp": true,
+        "width": "15",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1899bc6a4ef86be0",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "captacion",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "d1b3ee5915f0f6fc",
+        "type": "ui_group",
+        "name": "Formulario",
+        "tab": "219bf782a7bcea97",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "08e714efc0a7691b",
+        "type": "ui_group",
+        "name": "Formulario",
+        "tab": "4c2659b30526538e",
+        "order": 1,
+        "disp": true,
+        "width": "5",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6517f3016d5c477a",
+        "type": "ui_group",
+        "name": "Correo",
+        "tab": "4eab28893ec8d776",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "715dc720058e50a5",
+        "type": "ui_group",
+        "name": "Consulta",
+        "tab": "4c2659b30526538e",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3939e1a8bb4490e0",
+        "type": "ui_group",
+        "name": "Formulario de actualizar",
+        "tab": "4c2659b30526538e",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "219bf782a7bcea97",
+        "type": "ui_tab",
+        "name": "Registro de aspirantes",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4c2659b30526538e",
+        "type": "ui_tab",
+        "name": "Consulta de aspirantes",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4eab28893ec8d776",
+        "type": "ui_tab",
+        "name": "Envio de correo",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]
