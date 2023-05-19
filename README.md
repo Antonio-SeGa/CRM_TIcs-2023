@@ -8,4 +8,4 @@ La implementacion de este CRM  permite almacenar y organizar la información de 
 - MySQL
 
 ### Nodos 
-* ~npm install node-red-contrib-sqlstring~
+* <code>npm install node-red-contrib-sqlstring</code>
